@@ -1,28 +1,27 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import { Layout } from 'antd';
+import SideBar from './components/SideBar';
+import AppHeader from './components/AppHeader';
+import Main from './components/Main';
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
-    );
+const { Content } = Layout;
+
+export default function App(props) {
+  const [collapsed, setCollapsed] = useState(false)
+
+  const toggle = () => {
+    setCollapsed(!collapsed);
   }
-}
 
-export default App;
+  return (
+    <Layout style={{ minHeight: '100vh' }}>
+      <SideBar collapsed={collapsed} />
+      <Layout>
+        <AppHeader collapsed={collapsed} toggle={() => toggle()} />
+        <Content style={{ margin: '24px 16px', padding: 24, background: '#fff', minHeight: 360 }}>
+          <Main />
+        </Content>
+      </Layout>
+    </Layout>
+  );
+}
